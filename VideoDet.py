@@ -24,11 +24,11 @@ def videoFaceDet():
 		#Grayscale conversion of the frame
 		grayImg=cv2.cvtColor(fr,cv2.COLOR_BGR2GRAY)
 		
-		## Scale  Cascade Classifiers factor: aqui se ajusta la presicion con la que se analiza el video
+		## Scale  Cascade Classifiers factor: aqui se ajusta la presicion con la que se analizan las imagenes
 		faces=faceCascade.detectMultiScale(grayImg, scaleFactor=1.05, minNeighbors=3)
 		
 		#detect faces and draw rentangle
-		cv2.rectangle(frame, (30, 80), (300, 300), (255,0,0), 2)
+		cv2.rectangle(frame, (upper_left[0], upper_left[1]), (bottom_right[0], bottom_right[1]), (255,0,0), 2)
 		for x, y, w, h in faces:
 			fr=cv2.rectangle(fr, (x,y), (x+w, y+h), (0,255,0), 2)
 			
