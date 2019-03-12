@@ -9,24 +9,34 @@ def videoFaceDet():
 	# Trainign
 	faceCascade=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
+	#Puntos para crear rectangulo a analizar
+	upper_left = (30, 80)
+	bottom_right = (300, 300)
+
 	while True:
 		
+		# Lectura del video
 		check, frame = video.read()
 		
+		#Parte del video a analizar
+		fr = frame[upper_left[1] : bottom_right[1], upper_left[0] : bottom_right[0]]
+
 		#Grayscale conversion of the frame
-		grayImg=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+		grayImg=cv2.cvtColor(fr,cv2.COLOR_BGR2GRAY)
 		
-		## Scale  Cascade Classifiers factor
-		faces=faceCascade.detectMultiScale(grayImg, scaleFactor=1.05, minNeighbors=5)
+		## Scale  Cascade Classifiers factor: aqui se ajusta la presicion con la que se analiza el video
+		faces=faceCascade.detectMultiScale(grayImg, scaleFactor=1.05, minNeighbors=3)
 		
 		#detect faces and draw rentangle
-		cv2.rectangle(frame, (100, 100), (600, 400), (255,0,0), 2)
+		cv2.rectangle(frame, (30, 80), (300, 300), (255,0,0), 2)
 		for x, y, w, h in faces:
-			frame=cv2.rectangle(frame, (x,y), (x+w, y+h), (0,255,0), 3)
+			fr=cv2.rectangle(fr, (x,y), (x+w, y+h), (0,255,0), 2)
 			
 
 		font = cv2.FONT_HERSHEY_SIMPLEX
-		cv2.putText(frame,'Rostros '+str(len(faces)),(10,500), font, 2,(255,0,0),3,cv2.LINE_AA)
+		cv2.putText(fr,'Rostros '+str(len(faces)),(40,100), font, 1,(255,0,0),1,cv2.LINE_AA)
+
+		
 
 		cv2.imshow("Video", frame)
 
