@@ -11,6 +11,7 @@ Ejecutar script:
 ```
 python VideoDet.py
 ```
+![Captura](screen.png)
 
 > Nota
 > - Se utilizó el video proporcionado con el nombre de cam.wmv
