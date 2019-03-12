@@ -9,16 +9,25 @@ def videoFaceDet():
 	# Trainign
 	faceCascade=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
-	#Puntos para crear rectangulo a analizar
-	upper_left = (30, 80)
-	bottom_right = (300, 300)
+	#Cargar preview del video
+	check, frame = video.read()
+	fromCenter = False
+
+	#Seleccionar area a mapear
+	(x, y, w, h) = cv2.selectROI(frame, fromCenter)
+	upper_left = (x, y)
+	bottom_right = (x+w, y+h)
+
+	print(upper_left)
+	print(bottom_right)
+
+	#Cerrar ventana del preview
+	cv2.destroyAllWindows()
 
 	while True:
 		
 		# Lectura del video
 		check, frame = video.read()
-		
-		#Parte del video a analizar
 		fr = frame[upper_left[1] : bottom_right[1], upper_left[0] : bottom_right[0]]
 
 		#Grayscale conversion of the frame
@@ -34,7 +43,7 @@ def videoFaceDet():
 			
 
 		font = cv2.FONT_HERSHEY_SIMPLEX
-		cv2.putText(fr,'Rostros '+str(len(faces)),(40,100), font, 1,(255,0,0),1,cv2.LINE_AA)
+		cv2.putText(frame,'Rostros '+str(len(faces)),(40,100), font, 1,(0,0,255),2,cv2.LINE_AA)
 
 		
 
